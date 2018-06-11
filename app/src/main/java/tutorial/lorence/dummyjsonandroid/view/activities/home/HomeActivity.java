@@ -1,5 +1,6 @@
 package tutorial.lorence.dummyjsonandroid.view.activities.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
@@ -86,6 +87,11 @@ public class HomeActivity extends BaseActivity implements HomeView {
     @Override
     public void onGetItemsSuccess(List<Item> items) {
         String url = items.get(0).getData().getThumbnail().getHqDefault();
+        Intent sendResult = new Intent("tutorial.lorence.dummyjsonandroid");
+        if (url != null) {
+            sendResult.putExtra("sURL", url);
+        }
+        mContext.sendBroadcast(sendResult);
         showDataOnUI();
     }
 

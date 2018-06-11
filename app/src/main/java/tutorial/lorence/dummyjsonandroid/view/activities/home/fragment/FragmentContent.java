@@ -1,13 +1,17 @@
 package tutorial.lorence.dummyjsonandroid.view.activities.home.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +53,8 @@ public class FragmentContent extends Fragment implements DownloadImage.DownloadI
     @Inject
     DownloadImage mDownloadImage;
 
+    private BroadcastReceiver broadcastGetAnnouncement;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -82,14 +88,25 @@ public class FragmentContent extends Fragment implements DownloadImage.DownloadI
         mRecyclerView.setLayoutManager(mLayoutManager);
         mUserAdapter.updateData(mGrouItems);
         mRecyclerView.setAdapter(mUserAdapter);
-
-//        mDownloadImage.attachInterface(this);
-//        mDownloadImage.execute("");
+        mDownloadImage.attachInterface(this);
+        getURL();
         return rootView;
+    }
+
+    private void getURL() {
+        IntentFilter intentFilter = new IntentFilter("tutorial.lorence.dummyjsonandroid");
+        broadcastGetAnnouncement = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String sURL = intent.getStringExtra("sURL");
+                mDownloadImage.execute(sURL);
+            }
+        };
+        mHomeActivity.registerReceiver(broadcastGetAnnouncement, intentFilter);
     }
 
     @Override
     public void getBitmap(Bitmap bitmap) {
-
+        Log.i("TAG", "URL: "+bitmap.toString());
     }
 }
