@@ -63,7 +63,7 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (viewType == mViewType.USER_VIEW_TYPE) {
             CustomHolder holder = (CustomHolder) viewHolder;
             Item item = mListObject.get(position);
-            holder.tvUserName.setText(item.getUsername());
+            holder.tvUserName.setText(item.getUserid());
         }
     }
 

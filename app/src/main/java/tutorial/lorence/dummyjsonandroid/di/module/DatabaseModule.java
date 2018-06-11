@@ -7,7 +7,6 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import tutorial.lorence.dummyjsonandroid.app.Application;
-import tutorial.lorence.dummyjsonandroid.data.storage.database.DbAccess.DAItem;
 import tutorial.lorence.dummyjsonandroid.service.DisposableManager;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.HomeModel;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.HomeModelImpl;
@@ -32,15 +31,13 @@ public class DatabaseModule {
 
     @Singleton
     @Provides
-    DAItem provideDAUser() { return new DAItem(); }
-
-    @Singleton
-    @Provides
-    HomeModel provideHomeModel(DAItem daItem) {
-        return new HomeModelImpl(mContext, daItem);
+    HomeModel provideHomeModel() {
+        return new HomeModelImpl(mContext);
     }
 
     @Singleton
     @Provides
-    DisposableManager provideDisposableManager() { return new DisposableManager(); }
+    DisposableManager provideDisposableManager() {
+        return new DisposableManager();
+    }
 }

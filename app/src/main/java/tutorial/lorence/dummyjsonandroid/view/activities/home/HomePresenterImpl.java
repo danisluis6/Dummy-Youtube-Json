@@ -49,7 +49,7 @@ public class HomePresenterImpl implements HomePresenter {
 
     @Override
     public void onGetItemsSuccess(List<Item> items) {
-        mHomeView.onGetUsersSuccess(items);
+        mHomeView.onGetItemsSuccess(items);
     }
 
     @Override

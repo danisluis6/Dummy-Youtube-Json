@@ -6,7 +6,6 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import tutorial.lorence.dummyjsonandroid.R;
-import tutorial.lorence.dummyjsonandroid.data.storage.database.DbAccess.DAItem;
 import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Item;
 import tutorial.lorence.dummyjsonandroid.other.Utils;
 import tutorial.lorence.dummyjsonandroid.service.DisposableManager;
@@ -23,14 +22,12 @@ import tutorial.lorence.dummyjsonandroid.service.JsonData;
 public class HomeModelImpl implements HomeModel, IDisposableListener<Item> {
 
     private Context mContext;
-    private DAItem mDaItem;
     private HomePresenter mHomePresenter;
     private JsonData mJsonData;
     private DisposableManager mDisposableManager;
 
-    public HomeModelImpl(Context context, DAItem daItem) {
+    public HomeModelImpl(Context context) {
         mContext = context;
-        mDaItem = daItem;
     }
 
     @Override

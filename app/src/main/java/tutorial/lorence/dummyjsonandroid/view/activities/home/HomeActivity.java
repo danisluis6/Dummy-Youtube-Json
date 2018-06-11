@@ -3,6 +3,7 @@ package tutorial.lorence.dummyjsonandroid.view.activities.home;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;

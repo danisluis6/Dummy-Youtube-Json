@@ -12,72 +12,29 @@ import com.google.gson.annotations.SerializedName;
 
 public class Item {
 
-    @SerializedName("userid")
+    @SerializedName("apiVersion")
     @Expose
-    private int userid;
+    private String apiVersion;
 
-    @SerializedName("username")
+    @SerializedName("data")
     @Expose
-    private String username;
-
-    @SerializedName("password")
-    @Expose
-    private String password;
-
-    @SerializedName("fullname")
-    @Expose
-    private String fullname;
-
-    @SerializedName("path")
-    @Expose
-    private String path;
-
-    @SerializedName("email")
-    @Expose
-    private String email;
-
-    @SerializedName("address")
-    @Expose
-    private String address;
+    private Data data;
 
     public Item() {
     }
 
-    public Item(int userid, String username, String password, String fullname, String avatar, String email, String address) {
-        this.userid = userid;
-        this.username = username;
-        this.password = password;
-        this.fullname = fullname;
-        this.path = avatar;
-        this.email = email;
-        this.address = address;
+    public Item(String userid, Data data) {
+        this.apiVersion = userid;
+        this.data = data;
     }
 
-    public int getUserID() {
-        return userid;
+    public String getUserid() {
+        return apiVersion;
     }
 
-    public String getUsername() {
-        return username;
+
+    public Data getData() {
+        return data;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public String getFullname() {
-        return fullname;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
 }
