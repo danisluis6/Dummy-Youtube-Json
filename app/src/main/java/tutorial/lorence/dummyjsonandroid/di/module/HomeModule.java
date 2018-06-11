@@ -2,14 +2,12 @@ package tutorial.lorence.dummyjsonandroid.di.module;
 
 import android.content.Context;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 import dagger.Module;
 import dagger.Provides;
-import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.User;
+import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Item;
 import tutorial.lorence.dummyjsonandroid.di.scope.ActivityScope;
 import tutorial.lorence.dummyjsonandroid.service.DisposableManager;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.HomeModel;
@@ -75,7 +73,7 @@ public class HomeModule {
     @Provides
     @ActivityScope
     UserAdapter provideUserAdapter(Context context, ViewType viewType) {
-        return new UserAdapter(context, viewType, new ArrayList<User>());
+        return new UserAdapter(context, viewType, new ArrayList<Item>());
     }
 
     @Provides

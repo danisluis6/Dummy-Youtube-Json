@@ -12,7 +12,7 @@ import javax.inject.Inject;
 import io.reactivex.disposables.Disposable;
 import tutorial.lorence.dummyjsonandroid.R;
 import tutorial.lorence.dummyjsonandroid.app.Application;
-import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.User;
+import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Item;
 import tutorial.lorence.dummyjsonandroid.di.module.HomeModule;
 import tutorial.lorence.dummyjsonandroid.service.JsonData;
 import tutorial.lorence.dummyjsonandroid.view.activities.BaseActivity;
@@ -28,7 +28,7 @@ import tutorial.lorence.dummyjsonandroid.view.activities.home.loading.FragmentLo
 
 public class HomeActivity extends BaseActivity implements HomeView {
 
-    private List<User> mGroupUsers = new ArrayList<>();
+    private List<Item> mGroupItems = new ArrayList<>();
 
     @Inject
     FragmentLoading mFragmentLoading;
@@ -66,12 +66,12 @@ public class HomeActivity extends BaseActivity implements HomeView {
         if (savedInstanceState == null) {
             mFragmentTransaction.add(R.id.fragment_container, mFragmentLoading);
             mFragmentTransaction.commit();
-            mHomePresenter.getUsers();
-            showUserOnUI();
+            mHomePresenter.getItems();
+            showDataOnUI();
         }
     }
 
-    private void showUserOnUI() {
+    private void showDataOnUI() {
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -84,8 +84,8 @@ public class HomeActivity extends BaseActivity implements HomeView {
         }, 1000);
     }
 
-    public List<User> getGroupUsers() {
-        return mGroupUsers;
+    public List<Item> getGroupItems() {
+        return mGroupItems;
     }
 
     @Override
@@ -94,12 +94,12 @@ public class HomeActivity extends BaseActivity implements HomeView {
     }
 
     @Override
-    public void onGetUsersSuccess(List<User> users) {
-        mGroupUsers = users;
+    public void onGetItemsSuccess(List<Item> items) {
+        mGroupItems = items;
     }
 
     @Override
-    public void onGetUsersFailure(String message) {
+    public void onGetItemsFailure(String message) {
 
     }
 

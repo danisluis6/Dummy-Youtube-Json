@@ -64,7 +64,7 @@ public final class DbContract {
      */
     private static final String DROP_TABLE = "DROP TABLE IF EXISTS ";
     /**
-     * Drop query for User table.
+     * Drop query for Item table.
      */
     static final String SQL_DELETE_USER = new StringBuilder(DROP_TABLE)
             .append(TableUser.TABLE_NAME).toString();

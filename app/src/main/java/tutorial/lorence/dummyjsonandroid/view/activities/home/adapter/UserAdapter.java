@@ -11,7 +11,7 @@ import com.google.android.gms.ads.formats.NativeAd;
 import java.util.List;
 
 import tutorial.lorence.dummyjsonandroid.R;
-import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.User;
+import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Item;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.adapter.viewholder.CustomHolder;
 
 /**
@@ -25,13 +25,13 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private ViewType mViewType;
     private final Context mContext;
-    private List<User> mListObject;
+    private List<Item> mListObject;
 
     /**
      * For this example app, the recyclerViewItems list contains only
      * {@link android.view.MenuItem} and {@link NativeAd} types.
      */
-    public UserAdapter(Context context, ViewType viewType, List<User> list) {
+    public UserAdapter(Context context, ViewType viewType, List<Item> list) {
         this.mContext = context;
         this.mListObject = list;
         this.mViewType = viewType;
@@ -62,13 +62,13 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         int viewType = getItemViewType(position);
         if (viewType == mViewType.USER_VIEW_TYPE) {
             CustomHolder holder = (CustomHolder) viewHolder;
-            User item = mListObject.get(position);
+            Item item = mListObject.get(position);
             holder.tvUserName.setText(item.getUsername());
         }
     }
 
-    public void updateData(List<User> users) {
-        mListObject = users;
+    public void updateData(List<Item> items) {
+        mListObject = items;
         notifyDataSetChanged();
     }
 }

@@ -2,7 +2,7 @@ package tutorial.lorence.dummyjsonandroid.service;
 
 import java.util.List;
 
-import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.User;
+import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Item;
 
 /**
  * Created by vuongluis on 4/14/2018.
@@ -14,7 +14,7 @@ import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.User;
 public interface IDisposableListener<T> {
     void onComplete();
 
-    void onHandleData(List<User> users);
+    void onHandleData(List<Item> items);
 
     void onApiFailure(Throwable error);
 }

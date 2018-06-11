@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,7 +13,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import tutorial.lorence.dummyjsonandroid.R;
-import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.User;
+import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Item;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.HomeActivity;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.adapter.UserAdapter;
 
@@ -28,7 +27,7 @@ import tutorial.lorence.dummyjsonandroid.view.activities.home.adapter.UserAdapte
 @SuppressLint("ValidFragment")
 public class FragmentRecycler extends Fragment {
 
-    private List<User> mGrouUsers;
+    private List<Item> mGrouItems;
     private HomeActivity mHomeActivity;
     private UserAdapter mUserAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -45,7 +44,7 @@ public class FragmentRecycler extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        mGrouUsers = mHomeActivity.getGroupUsers();
+        mGrouItems = mHomeActivity.getGroupItems();
     }
 
     @Override
@@ -55,7 +54,7 @@ public class FragmentRecycler extends Fragment {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(mContext);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mUserAdapter.updateData(mGrouUsers);
+        mUserAdapter.updateData(mGrouItems);
         mRecyclerView.setAdapter(mUserAdapter);
         return rootView;
     }

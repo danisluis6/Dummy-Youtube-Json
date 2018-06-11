@@ -1,14 +1,13 @@
 package tutorial.lorence.dummyjsonandroid.view.activities.home;
 
 import android.content.Context;
-import android.util.Log;
 
 import java.util.List;
 
 import io.reactivex.Observable;
 import tutorial.lorence.dummyjsonandroid.R;
-import tutorial.lorence.dummyjsonandroid.data.storage.database.DbAccess.DAUser;
-import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.User;
+import tutorial.lorence.dummyjsonandroid.data.storage.database.DbAccess.DAItem;
+import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Item;
 import tutorial.lorence.dummyjsonandroid.other.Utils;
 import tutorial.lorence.dummyjsonandroid.service.DisposableManager;
 import tutorial.lorence.dummyjsonandroid.service.IDisposableListener;
@@ -21,17 +20,17 @@ import tutorial.lorence.dummyjsonandroid.service.JsonData;
  * @version 0.0.1
  */
 
-public class HomeModelImpl implements HomeModel, IDisposableListener<User> {
+public class HomeModelImpl implements HomeModel, IDisposableListener<Item> {
 
     private Context mContext;
-    private DAUser mDaUser;
+    private DAItem mDaItem;
     private HomePresenter mHomePresenter;
     private JsonData mJsonData;
     private DisposableManager mDisposableManager;
 
-    public HomeModelImpl(Context context, DAUser daUser) {
+    public HomeModelImpl(Context context, DAItem daItem) {
         mContext = context;
-        mDaUser = daUser;
+        mDaItem = daItem;
     }
 
     @Override
@@ -51,11 +50,11 @@ public class HomeModelImpl implements HomeModel, IDisposableListener<User> {
     }
 
     @Override
-    public void getUsers() {
+    public void getItems() {
         if (Utils.isInternetOn(mContext)) {
-            mHomePresenter.setDisposable(mDisposableManager.callDisposable(Observable.just(mJsonData.getUsersFromJson())));
+            mHomePresenter.setDisposable(mDisposableManager.callDisposable(Observable.just(mJsonData.getItemsFromJson())));
         } else {
-            mHomePresenter.onGetUsersFailure(mContext.getString(R.string.no_internet_connection));
+            mHomePresenter.onGetItemsFailure(mContext.getString(R.string.no_internet_connection));
         }
     }
 
@@ -64,12 +63,12 @@ public class HomeModelImpl implements HomeModel, IDisposableListener<User> {
     }
 
     @Override
-    public void onHandleData(List<User> users) {
-        mHomePresenter.onGetUsersSuccess(users);
+    public void onHandleData(List<Item> items) {
+        mHomePresenter.onGetItemsSuccess(items);
     }
 
     @Override
     public void onApiFailure(Throwable error) {
-        mHomePresenter.onGetUsersFailure(mContext.getString(R.string.error_time_out));
+        mHomePresenter.onGetItemsFailure(mContext.getString(R.string.error_time_out));
     }
 }

@@ -9,7 +9,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
-import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.User;
+import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Item;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.HomeModelImpl;
 
 /**
@@ -28,18 +28,18 @@ public class DisposableManager {
     public DisposableManager() {
     }
 
-    public Disposable callDisposable(Observable<List<User>> observable) {
+    public Disposable callDisposable(Observable<List<Item>> observable) {
         disposable = observable.subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableObserver<List<User>>() {
+                .subscribeWith(new DisposableObserver<List<Item>>() {
                     @Override
                     public void onComplete() {
                         listener.onComplete();
                     }
 
                     @Override
-                    public void onNext(List<User> users) {
-                        listener.onHandleData(users);
+                    public void onNext(List<Item> items) {
+                        listener.onHandleData(items);
                     }
 
                     @Override

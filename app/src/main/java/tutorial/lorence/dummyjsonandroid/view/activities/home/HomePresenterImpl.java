@@ -5,7 +5,7 @@ import android.content.Context;
 import java.util.List;
 
 import io.reactivex.disposables.Disposable;
-import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.User;
+import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Item;
 import tutorial.lorence.dummyjsonandroid.service.DisposableManager;
 import tutorial.lorence.dummyjsonandroid.service.JsonData;
 
@@ -38,8 +38,8 @@ public class HomePresenterImpl implements HomePresenter {
     }
 
     @Override
-    public void getUsers() {
-        mHomeModel.getUsers();
+    public void getItems() {
+        mHomeModel.getItems();
     }
 
     @Override
@@ -48,12 +48,12 @@ public class HomePresenterImpl implements HomePresenter {
     }
 
     @Override
-    public void onGetUsersSuccess(List<User> users) {
-        mHomeView.onGetUsersSuccess(users);
+    public void onGetItemsSuccess(List<Item> items) {
+        mHomeView.onGetUsersSuccess(items);
     }
 
     @Override
-    public void onGetUsersFailure(String message) {
-        mHomeView.onGetUsersFailure(message);
+    public void onGetItemsFailure(String message) {
+        mHomeView.onGetItemsFailure(message);
     }
 }

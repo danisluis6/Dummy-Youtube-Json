@@ -11,7 +11,7 @@ import tutorial.lorence.dummyjsonandroid.service.JsonData;
  */
 
 public interface HomeModel {
-    void getUsers();
+    void getItems();
     void attachPresenter(HomePresenterImpl homePresenter);
     void attachJsonData(JsonData mJsonData);
     void attachDisposable(DisposableManager disposableManager);

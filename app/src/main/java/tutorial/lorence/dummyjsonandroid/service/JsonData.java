@@ -15,7 +15,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.User;
+import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Item;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.HomeActivity;
 
 /**
@@ -35,13 +35,13 @@ public class JsonData {
     }
 
     /**
-     * Adds {@link User}'s from a JSON file.
+     * Adds {@link Item}'s from a JSON file.
      */
-    public List<User> getUsersFromJson() {
+    public List<Item> getItemsFromJson() {
         Gson gson = new Gson();
         try {
             String jsonDataString = convertJsonToString();
-            return gson.fromJson(jsonDataString, new TypeToken<ArrayList<User>>() {}.getType());
+            return gson.fromJson(jsonDataString, new TypeToken<ArrayList<Item>>() {}.getType());
         } catch (IOException exception) {
             Log.e(HomeActivity.class.getName(), "Unable to parse JSON file.", exception);
         }
@@ -59,7 +59,7 @@ public class JsonData {
         StringBuilder builder = new StringBuilder();
         try {
             String jsonDataString;
-            inputStream = mContext.getResources().openRawResource(mContext.getResources().getIdentifier("json_user", "raw", mContext.getPackageName()));
+            inputStream = mContext.getResources().openRawResource(mContext.getResources().getIdentifier("json_video", "raw", mContext.getPackageName()));
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
             while ((jsonDataString = bufferedReader.readLine()) != null) {
                 builder.append(jsonDataString);
