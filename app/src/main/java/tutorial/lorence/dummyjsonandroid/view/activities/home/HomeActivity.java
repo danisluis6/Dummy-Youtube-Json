@@ -96,7 +96,9 @@ public class HomeActivity extends BaseActivity implements HomeView {
 
     @Override
     public void onGetItemsSuccess(List<Item> items) {
-        mGroupItems = items;
+        String url = items.get(0).getData().getContent().getFive();
+        Log.i("TAG", "URL: "+url);
+//        mGroupItems = items;
     }
 
     @Override
