@@ -3,7 +3,6 @@ package tutorial.lorence.dummyjsonandroid.view.activities.home;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +15,9 @@ import tutorial.lorence.dummyjsonandroid.app.Application;
 import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Item;
 import tutorial.lorence.dummyjsonandroid.di.module.HomeModule;
 import tutorial.lorence.dummyjsonandroid.service.JsonData;
+import tutorial.lorence.dummyjsonandroid.service.asyntask.DownloadImage;
 import tutorial.lorence.dummyjsonandroid.view.activities.BaseActivity;
-import tutorial.lorence.dummyjsonandroid.view.activities.home.fragment.FragmentRecycler;
+import tutorial.lorence.dummyjsonandroid.view.activities.home.fragment.FragmentContent;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.loading.FragmentLoading;
 
 /**
@@ -41,10 +41,13 @@ public class HomeActivity extends BaseActivity implements HomeView {
     JsonData mJsonData;
 
     @Inject
-    FragmentRecycler mFragmentRecycler;
+    FragmentContent mFragmentContent;
 
     @Inject
     HomePresenter mHomePresenter;
+
+    @Inject
+    DownloadImage mDownloadImage;
 
     private Disposable mDisposable;
 
@@ -68,21 +71,7 @@ public class HomeActivity extends BaseActivity implements HomeView {
             mFragmentTransaction.add(R.id.fragment_container, mFragmentLoading);
             mFragmentTransaction.commit();
             mHomePresenter.getItems();
-            showDataOnUI();
         }
-    }
-
-    private void showDataOnUI() {
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mFragmentTransaction = getSupportFragmentManager().beginTransaction();
-                mFragmentTransaction.replace(R.id.fragment_container, mFragmentRecycler);
-                mFragmentTransaction.disallowAddToBackStack();
-                mFragmentTransaction.commit();
-            }
-        }, 1000);
     }
 
     public List<Item> getGroupItems() {
@@ -96,14 +85,26 @@ public class HomeActivity extends BaseActivity implements HomeView {
 
     @Override
     public void onGetItemsSuccess(List<Item> items) {
-        String url = items.get(0).getData().getContent().getFive();
-        Log.i("TAG", "URL: "+url);
-//        mGroupItems = items;
+        String url = items.get(0).getData().getThumbnail().getHqDefault();
+        showDataOnUI();
     }
 
     @Override
     public void onGetItemsFailure(String message) {
 
+    }
+
+    private void showDataOnUI() {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mFragmentTransaction = getSupportFragmentManager().beginTransaction();
+                mFragmentTransaction.replace(R.id.fragment_container, mFragmentContent);
+                mFragmentTransaction.disallowAddToBackStack();
+                mFragmentTransaction.commit();
+            }
+        }, 1000);
     }
 
     @Override

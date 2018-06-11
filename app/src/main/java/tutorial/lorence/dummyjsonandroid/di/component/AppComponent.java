@@ -4,6 +4,7 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import tutorial.lorence.dummyjsonandroid.di.module.AppModule;
+import tutorial.lorence.dummyjsonandroid.di.module.AsyntaskModule;
 import tutorial.lorence.dummyjsonandroid.di.module.DatabaseModule;
 import tutorial.lorence.dummyjsonandroid.di.module.LoadingModule;
 import tutorial.lorence.dummyjsonandroid.di.module.HomeModule;
@@ -18,7 +19,7 @@ import tutorial.lorence.dummyjsonandroid.di.module.HomeModule;
 @Singleton
 @Component(
         modules = {
-                AppModule.class, LoadingModule.class, DatabaseModule.class
+                AppModule.class, LoadingModule.class, DatabaseModule.class, AsyntaskModule.class
         }
 )
 public interface AppComponent {

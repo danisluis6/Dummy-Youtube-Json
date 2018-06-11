@@ -1,6 +1,7 @@
 package tutorial.lorence.dummyjsonandroid.di.component;
 
 import dagger.Subcomponent;
+import tutorial.lorence.dummyjsonandroid.di.module.FragmentModule;
 import tutorial.lorence.dummyjsonandroid.di.module.HomeModule;
 import tutorial.lorence.dummyjsonandroid.di.scope.ActivityScope;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.HomeActivity;
@@ -21,6 +22,7 @@ import tutorial.lorence.dummyjsonandroid.view.activities.home.HomeActivity;
 )
 public interface HomeComponent {
     HomeActivity inject(HomeActivity homeActivity);
+    FragmentComponent plus(FragmentModule fragmentModule);
 }
 
 

@@ -16,7 +16,7 @@ import tutorial.lorence.dummyjsonandroid.view.activities.home.HomePresenterImpl;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.HomeView;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.adapter.UserAdapter;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.adapter.ViewType;
-import tutorial.lorence.dummyjsonandroid.view.activities.home.fragment.FragmentRecycler;
+import tutorial.lorence.dummyjsonandroid.view.activities.home.fragment.FragmentContent;
 import tutorial.lorence.dummyjsonandroid.service.JsonData;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.HomeActivity;
 
@@ -36,6 +36,10 @@ public class HomeModule {
     public HomeModule(HomeActivity homeActivity, HomeView homeView) {
         this.mHomeActivity = homeActivity;
         this.mHomeView = homeView;
+    }
+
+    public HomeModule(HomeActivity homeActivity) {
+        this.mHomeActivity = homeActivity;
     }
 
     @Provides
@@ -78,8 +82,8 @@ public class HomeModule {
 
     @Provides
     @ActivityScope
-    FragmentRecycler provideFragmentRecycler(Context context, HomeActivity homeActivity, UserAdapter userAdapter) {
-        return new FragmentRecycler(context, homeActivity, userAdapter);
+    FragmentContent provideFragmentRecycler(Context context, HomeActivity homeActivity, UserAdapter userAdapter) {
+        return new FragmentContent(context, homeActivity, userAdapter);
     }
 
     @Provides
