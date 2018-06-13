@@ -3,8 +3,6 @@ package tutorial.lorence.dummyjsonandroid.view.activities.home.fragment;
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -55,15 +53,14 @@ public class FragmentContent extends Fragment implements DownloadImage.DownloadI
 
     private BroadcastReceiver broadcastGetAnnouncement;
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    public void distributedDaggerComponents(HomeActivity homeActivity) {
         Application.getInstance()
                 .getAppComponent()
-                .plus(new HomeModule((HomeActivity) getActivity()))
+                .plus(new HomeModule(homeActivity))
                 .plus(new FragmentModule())
                 .inject(this);
     }
+
 
     @SuppressLint("ValidFragment")
     public FragmentContent(Context context, HomeActivity homeActivity, UserAdapter userAdapter) {
@@ -88,25 +85,16 @@ public class FragmentContent extends Fragment implements DownloadImage.DownloadI
         mRecyclerView.setLayoutManager(mLayoutManager);
         mUserAdapter.updateData(mGrouItems);
         mRecyclerView.setAdapter(mUserAdapter);
-        mDownloadImage.attachInterface(this);
-        getURL();
         return rootView;
     }
 
-    private void getURL() {
-        IntentFilter intentFilter = new IntentFilter("tutorial.lorence.dummyjsonandroid");
-        broadcastGetAnnouncement = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                String sURL = intent.getStringExtra("sURL");
-                mDownloadImage.execute(sURL);
-            }
-        };
-        mHomeActivity.registerReceiver(broadcastGetAnnouncement, intentFilter);
+    public void updateURL(String sURL) {
+        mDownloadImage.attachInterface(this);
+        mDownloadImage.execute(sURL);
     }
 
     @Override
     public void getBitmap(Bitmap bitmap) {
-        Log.i("TAG", "URL: "+bitmap.toString());
+        Log.i("TAG", bitmap.toString());
     }
 }

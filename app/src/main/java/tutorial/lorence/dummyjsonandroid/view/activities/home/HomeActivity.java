@@ -1,6 +1,6 @@
 package tutorial.lorence.dummyjsonandroid.view.activities.home;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
@@ -34,6 +34,9 @@ public class HomeActivity extends BaseActivity implements HomeView {
 
     @Inject
     FragmentLoading mFragmentLoading;
+
+    @Inject
+    Context mContext;
 
     @Inject
     FragmentTransaction mFragmentTransaction;
@@ -73,10 +76,7 @@ public class HomeActivity extends BaseActivity implements HomeView {
             mFragmentTransaction.commit();
             mHomePresenter.getItems();
         }
-    }
-
-    public List<Item> getGroupItems() {
-        return mGroupItems;
+        mFragmentContent.distributedDaggerComponents(this);
     }
 
     @Override
@@ -87,12 +87,8 @@ public class HomeActivity extends BaseActivity implements HomeView {
     @Override
     public void onGetItemsSuccess(List<Item> items) {
         String url = items.get(0).getData().getThumbnail().getHqDefault();
-        Intent sendResult = new Intent("tutorial.lorence.dummyjsonandroid");
-        if (url != null) {
-            sendResult.putExtra("sURL", url);
-        }
-        mContext.sendBroadcast(sendResult);
-        showDataOnUI();
+        mFragmentContent.updateURL(url);
+        loadFragmentContent();
     }
 
     @Override
@@ -100,7 +96,7 @@ public class HomeActivity extends BaseActivity implements HomeView {
 
     }
 
-    private void showDataOnUI() {
+    private void loadFragmentContent() {
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -119,5 +115,9 @@ public class HomeActivity extends BaseActivity implements HomeView {
         if (mDisposable != null) {
             mDisposable.dispose();
         }
+    }
+
+    public List<Item> getGroupItems() {
+        return mGroupItems;
     }
 }
