@@ -13,7 +13,6 @@ import io.reactivex.disposables.Disposable;
 import tutorial.lorence.dummyjsonandroid.R;
 import tutorial.lorence.dummyjsonandroid.app.Application;
 import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Schedule;
-import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.recycler.Item;
 import tutorial.lorence.dummyjsonandroid.di.module.HomeModule;
 import tutorial.lorence.dummyjsonandroid.service.JsonData;
 import tutorial.lorence.dummyjsonandroid.service.asyntask.DownloadImage;
@@ -84,7 +83,7 @@ public class HomeActivity extends BaseActivity implements HomeView {
 
     @Override
     public void onGetItemsSuccess(List<Schedule> items) {
-        Log.i("TAG", items.get(0).getDate() + ": "+items.get(0).getPlayer()+" >< "+items.get(0).getEnemy()+" : "+items.get(0).getTime());
+        Log.i("TAG", items.get(0).getDate() + ": " + items.get(0).getPlayer() + " >< " + items.get(0).getEnemy() + " : " + items.get(0).getTime());
 //        Bundle bundle = new Bundle();
 //        bundle.putString("sURL", url);
 //        mFragmentContent.setArguments(bundle);
