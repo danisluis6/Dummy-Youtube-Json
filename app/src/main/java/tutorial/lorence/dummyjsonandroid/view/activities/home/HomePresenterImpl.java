@@ -5,10 +5,9 @@ import android.content.Context;
 import java.util.List;
 
 import io.reactivex.disposables.Disposable;
-import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.recycler.Item;
+import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Schedule;
 import tutorial.lorence.dummyjsonandroid.other.Constants;
 import tutorial.lorence.dummyjsonandroid.service.DisposableManager;
-import tutorial.lorence.dummyjsonandroid.service.JsonData;
 
 /**
  * Created by vuongluis on 4/14/2018.
@@ -23,19 +22,14 @@ public class HomePresenterImpl implements HomePresenter {
     private HomeActivity mHomeActivity;
     private HomeView mHomeView;
     private HomeModel mHomeModel;
-    private JsonData mJsonData;
-    private DisposableManager mDisposableManager;
 
-    public HomePresenterImpl(Context context, HomeActivity homeActivity, HomeView homeView, HomeModel homeModel, JsonData jsonData, DisposableManager disposableManager) {
+    public HomePresenterImpl(Context context, HomeActivity homeActivity, HomeView homeView, HomeModel homeModel, DisposableManager disposableManager) {
         mContext = context;
         mHomeView = homeView;
         mHomeModel = homeModel;
         mHomeActivity = homeActivity;
-        mDisposableManager = disposableManager;
-        mJsonData = jsonData;
         mHomeModel.attachActivity(mHomeActivity);
         mHomeModel.attachPresenter(this);
-        mHomeModel.attachJsonData(mJsonData);
         mHomeModel.attachDisposable(disposableManager);
     }
 
@@ -50,7 +44,7 @@ public class HomePresenterImpl implements HomePresenter {
     }
 
     @Override
-    public void onGetItemsSuccess(List<Item> items) {
+    public void onGetItemsSuccess(List<Schedule> items) {
         mHomeView.onGetItemsSuccess(items);
     }
 

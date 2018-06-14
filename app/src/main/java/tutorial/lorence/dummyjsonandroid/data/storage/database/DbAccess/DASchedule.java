@@ -26,7 +26,6 @@ public class DASchedule {
 
     private ContentValues getContentValues(final Schedule schedule, Context context) {
         ContentValues values = new ContentValues();
-        values.put(DbContract.TableSchedule.COLUMN_NAME_INDEX, schedule.getIndex());
         values.put(DbContract.TableSchedule.COLUMN_NAME_PLAYER, schedule.getPlayer());
         values.put(DbContract.TableSchedule.COLUMN_NAME_ENEMY, schedule.getEnemy());
         values.put(DbContract.TableSchedule.COLUMN_NAME_TIME, schedule.getTime());

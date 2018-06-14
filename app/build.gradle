@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "tutorial.lorence.dummyjsonandroid"
+        applicationId "come.lorence.worldcup"
         minSdkVersion 19
         targetSdkVersion 26
         versionCode 1

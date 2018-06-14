@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Dummy.iml" filepath="$PROJECT_DIR$/Dummy.iml" />
+      <module fileurl="file://C:\Users\vuongluis\Desktop\Dummy-Youtube-Json\Dummy.iml" filepath="C:\Users\vuongluis\Desktop\Dummy-Youtube-Json\Dummy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Dummy-Youtube-Json.iml" filepath="$PROJECT_DIR$/Dummy-Youtube-Json.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\vuongluis\Desktop\Dummy-Youtube-Json\app\app.iml" filepath="C:\Users\vuongluis\Desktop\Dummy-Youtube-Json\app\app.iml" />
     </modules>
   </component>
 </project>

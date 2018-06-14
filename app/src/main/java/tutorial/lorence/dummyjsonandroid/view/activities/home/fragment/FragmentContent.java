@@ -61,7 +61,7 @@ public class FragmentContent extends BaseFragment implements DownloadImage.Downl
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_content, container, false);
         bindView(view);
-        downloadImageFromInternet(getArguments().getString("sURL"));
+//        downloadImageFromInternet(getArguments().getString("sURL"));
         return view;
     }
 

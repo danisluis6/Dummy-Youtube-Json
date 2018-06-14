@@ -88,7 +88,7 @@ public class HomeModule {
 
     @Provides
     @ActivityScope
-    HomePresenter provideHomePresenter(Context context, HomeActivity activity, HomeModel homeModel, JsonData jsonData, DisposableManager disposableManager) {
-        return new HomePresenterImpl(context, activity, mHomeView, homeModel, jsonData, disposableManager);
+    HomePresenter provideHomePresenter(Context context, HomeActivity activity, HomeModel homeModel, DisposableManager disposableManager) {
+        return new HomePresenterImpl(context, activity, mHomeView, homeModel, disposableManager);
     }
 }

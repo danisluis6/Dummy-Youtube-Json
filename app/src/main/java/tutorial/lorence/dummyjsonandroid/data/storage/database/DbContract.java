@@ -33,7 +33,7 @@ public final class DbContract {
     /**
      * Primary key.
      */
-    private static final String PRIMARY_AUTOINCREMENT = " INTEGER PRIMARY KEY AUTOINCREMENT";
+    private static final String PRIMARY_AUTOINCREMENT = " PRIMARY KEY AUTOINCREMENT";
     /**
      * Create table statement.
      */
@@ -41,7 +41,7 @@ public final class DbContract {
     /**
      * Create query for USER table.
      */
-    static final String SQL_CREATE_USER = new StringBuilder(CREATE_TABLE)
+    static final String SQL_CREATE_SCHEDULE = new StringBuilder(CREATE_TABLE)
             .append(TableSchedule.TABLE_NAME).append(LEFT_BRACKET_SEP)
             .append(TableSchedule.COLUMN_NAME_INDEX).append(INTEGER_TYPE)
             .append(PRIMARY_AUTOINCREMENT)
@@ -62,7 +62,7 @@ public final class DbContract {
     /**
      * Drop query for User table.
      */
-    static final String SQL_DELETE_USER = new StringBuilder(DROP_TABLE)
+    static final String SQL_DELETE_SCHEDULE = new StringBuilder(DROP_TABLE)
             .append(TableSchedule.TABLE_NAME).toString();
 
     /**
@@ -73,7 +73,7 @@ public final class DbContract {
 
     public abstract static class TableSchedule implements BaseColumns {
         public static final String TABLE_NAME = "schedule";
-        public static final String COLUMN_NAME_INDEX = "index";
+        public static final String COLUMN_NAME_INDEX = "id";
         public static final String COLUMN_NAME_PLAYER = "player";
         public static final String COLUMN_NAME_ENEMY = "enemy";
         public static final String COLUMN_NAME_TIME = "time";

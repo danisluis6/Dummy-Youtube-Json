@@ -9,6 +9,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
+import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Schedule;
 import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.recycler.Item;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.HomeModelImpl;
 
@@ -28,17 +29,21 @@ public class DisposableManager {
     public DisposableManager() {
     }
 
-    public Disposable callDisposable(Observable<List<Item>> observable) {
+    public void setDisposableInterface(HomeModelImpl disposableInterface) {
+        this.listener = disposableInterface;
+    }
+
+    public Disposable callDisposable(Observable<List<Schedule>> observable) {
         disposable = observable.subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableObserver<List<Item>>() {
+                .subscribeWith(new DisposableObserver<List<Schedule>>() {
                     @Override
                     public void onComplete() {
                         listener.onComplete();
                     }
 
                     @Override
-                    public void onNext(List<Item> items) {
+                    public void onNext(List<Schedule> items) {
                         listener.onHandleData(items);
                     }
 
@@ -48,9 +53,5 @@ public class DisposableManager {
                     }
                 });
         return disposable;
-    }
-
-    public void setDisposableInterface(HomeModelImpl disposableInterface) {
-        this.listener = disposableInterface;
     }
 }

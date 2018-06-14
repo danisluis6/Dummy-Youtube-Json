@@ -62,7 +62,7 @@ public class DbHelper extends SQLiteOpenHelper {
      * @param db The SQLiteDatabase.
      */
     public final void onCreate(final SQLiteDatabase db) {
-        db.execSQL(DbContract.SQL_CREATE_USER);
+        db.execSQL(DbContract.SQL_CREATE_SCHEDULE);
     }
 
     /**
@@ -114,7 +114,7 @@ public class DbHelper extends SQLiteOpenHelper {
      * @param db Database
      */
     private void deleteDatabase(final SQLiteDatabase db) {
-        db.execSQL(DbContract.SQL_DELETE_USER);
+        db.execSQL(DbContract.SQL_DELETE_SCHEDULE);
         // Create again
         onCreate(db);
     }

@@ -3,6 +3,7 @@ package tutorial.lorence.dummyjsonandroid.view.activities.home;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import javax.inject.Inject;
 import io.reactivex.disposables.Disposable;
 import tutorial.lorence.dummyjsonandroid.R;
 import tutorial.lorence.dummyjsonandroid.app.Application;
+import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Schedule;
 import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.recycler.Item;
 import tutorial.lorence.dummyjsonandroid.di.module.HomeModule;
 import tutorial.lorence.dummyjsonandroid.service.JsonData;
@@ -81,11 +83,11 @@ public class HomeActivity extends BaseActivity implements HomeView {
     }
 
     @Override
-    public void onGetItemsSuccess(List<Item> items) {
-        String url = items.get(0).getData().getThumbnail().getHqDefault();
-        Bundle bundle = new Bundle();
-        bundle.putString("sURL", url);
-        mFragmentContent.setArguments(bundle);
+    public void onGetItemsSuccess(List<Schedule> items) {
+        Log.i("TAG", items.get(0).getDate() + ": "+items.get(0).getPlayer()+" >< "+items.get(0).getEnemy()+" : "+items.get(0).getTime());
+//        Bundle bundle = new Bundle();
+//        bundle.putString("sURL", url);
+//        mFragmentContent.setArguments(bundle);
         loadFragmentContent();
     }
 

@@ -2,16 +2,13 @@ package tutorial.lorence.dummyjsonandroid.other;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import tutorial.lorence.dummyjsonandroid.data.storage.DatabaseInfo;
 import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Schedule;
-import tutorial.lorence.dummyjsonandroid.di.module.AppModule_ProvideApplicationFactory;
 
 /**
  * Created by vuongluis on 4/14/2018.
@@ -49,6 +46,7 @@ public class Utils {
     public static List<Schedule> convertStringToObject(List<String> list) {
         List<Schedule> tempsSchedules = new ArrayList<>();
         for (int index = 1; index < list.size(); index++) {
+
             String mydata = list.get(index);
             String _player = "", _enemy = "", _time = "", _date = "";
 
@@ -61,7 +59,7 @@ public class Utils {
             Matcher enemy = Pattern.compile("\\d{2}\\:\\d{2}\\s{1}.*").matcher(mydata);
             if (enemy.find())
             {
-                _enemy = enemy.group().substring(5, enemy.group().length()-1);
+                _enemy = enemy.group().substring(5, enemy.group().length());
             }
 
             Matcher date = Pattern.compile("\\d{2}\\/\\d{2}\\s+").matcher(mydata);

@@ -1,7 +1,6 @@
 package tutorial.lorence.dummyjsonandroid.view.activities.home;
 
 import android.content.Context;
-import android.util.Log;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -16,13 +15,11 @@ import io.reactivex.Observable;
 import tutorial.lorence.dummyjsonandroid.R;
 import tutorial.lorence.dummyjsonandroid.data.storage.database.DbAccess.DASchedule;
 import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Schedule;
-import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.recycler.Item;
 import tutorial.lorence.dummyjsonandroid.other.Constants;
 import tutorial.lorence.dummyjsonandroid.other.GenerateWebsite;
 import tutorial.lorence.dummyjsonandroid.other.Utils;
 import tutorial.lorence.dummyjsonandroid.service.DisposableManager;
 import tutorial.lorence.dummyjsonandroid.service.IDisposableListener;
-import tutorial.lorence.dummyjsonandroid.service.JsonData;
 
 /**
  * Created by vuongluis on 4/14/2018.
@@ -31,11 +28,10 @@ import tutorial.lorence.dummyjsonandroid.service.JsonData;
  * @version 0.0.1
  */
 
-public class HomeModelImpl implements HomeModel, IDisposableListener<Item> {
+public class HomeModelImpl implements HomeModel, IDisposableListener<Schedule> {
 
     private Context mContext;
     private HomePresenter mHomePresenter;
-    private JsonData mJsonData;
     private DisposableManager mDisposableManager;
     private GenerateWebsite mGenerateWebsite;
     private HomeActivity mHomeActivity;
@@ -53,11 +49,6 @@ public class HomeModelImpl implements HomeModel, IDisposableListener<Item> {
     }
 
     @Override
-    public void attachJsonData(JsonData jsonData) {
-        mJsonData = jsonData;
-    }
-
-    @Override
     public void attachActivity(HomeActivity homeActivity) {
         mHomeActivity = homeActivity;
     }
@@ -70,13 +61,7 @@ public class HomeModelImpl implements HomeModel, IDisposableListener<Item> {
 
     @Override
     public void getItems(Constants.MVP mvp) {
-        if (mvp == Constants.MVP._JSON) {
-            if (Utils.isInternetOn(mContext)) {
-                mHomePresenter.setDisposable(mDisposableManager.callDisposable(Observable.just(mJsonData.getItemsFromJson())));
-            } else {
-                mHomePresenter.onGetItemsFailure(mContext.getString(R.string.no_internet_connection));
-            }
-        } else if (mvp == Constants.MVP._JSOUP) {
+        if (mvp == Constants.MVP._JSOUP) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -93,8 +78,14 @@ public class HomeModelImpl implements HomeModel, IDisposableListener<Item> {
                     mHomeActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            List<Schedule>  temps = Utils.convertStringToObject(builder);
-                            Log.i("TAG", "N = "+temps.size()+"");
+                            if (mDaoSchedule.getAll(mContext).size() == 0) {
+                                mDaoSchedule.addAll(Utils.convertStringToObject(builder), mContext);
+                            }
+                            if (Utils.isInternetOn(mContext)) {
+                                mHomePresenter.setDisposable(mDisposableManager.callDisposable(Observable.just(mDaoSchedule.getAll(mContext))));
+                            } else {
+                                mHomePresenter.onGetItemsFailure(mContext.getString(R.string.no_internet_connection));
+                            }
                         }
                     });
                 }
@@ -108,8 +99,8 @@ public class HomeModelImpl implements HomeModel, IDisposableListener<Item> {
     }
 
     @Override
-    public void onHandleData(List<Item> items) {
-        mHomePresenter.onGetItemsSuccess(items);
+    public void onHandleData(List<Schedule> items) {
+        mHomePresenter.onGetItemsSuccess(mDaoSchedule.getAll(mContext));
     }
 
     @Override
