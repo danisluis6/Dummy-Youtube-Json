@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Youtube API Video</string>
+    <string name="app_name">Jsoup Tutorial Android</string>
     <string name="no_internet_connection">No Internet Connection</string>
     <string name="error_time_out">Connection to server timed out. Please try again later.</string>
 </resources>

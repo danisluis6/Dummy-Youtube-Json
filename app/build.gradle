@@ -21,12 +21,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        disable 'GoogleAppIndexingWarning'
+    }
+    defaultConfig {
+        multiDexEnabled true
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -48,11 +54,14 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.4.0'
     compile 'com.squareup.retrofit2:converter-gson:2.4.0'
     compile 'com.squareup.okhttp3:okhttp:3.10.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.5.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
 
     // Java Rx
     provided 'org.glassfish:javax.annotation:10.0-b28'
     compile 'com.google.auto.factory:auto-factory:1.0-beta3'
     compile "io.reactivex.rxjava2:rxjava:2.1.13"
     compile "io.reactivex.rxjava2:rxandroid:2.0.2"
+
+    // Jsoup
+    compile 'org.jsoup:jsoup:1.11.2'
 }

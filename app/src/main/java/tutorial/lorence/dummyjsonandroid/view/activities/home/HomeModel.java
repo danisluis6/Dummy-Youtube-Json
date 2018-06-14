@@ -1,5 +1,6 @@
 package tutorial.lorence.dummyjsonandroid.view.activities.home;
 
+import tutorial.lorence.dummyjsonandroid.other.Constants;
 import tutorial.lorence.dummyjsonandroid.service.DisposableManager;
 import tutorial.lorence.dummyjsonandroid.service.JsonData;
 
@@ -11,8 +12,9 @@ import tutorial.lorence.dummyjsonandroid.service.JsonData;
  */
 
 public interface HomeModel {
-    void getItems();
+    void getItems(Constants.MVP mvp);
     void attachPresenter(HomePresenterImpl homePresenter);
     void attachJsonData(JsonData mJsonData);
     void attachDisposable(DisposableManager disposableManager);
+    void attachActivity(HomeActivity mHomeActivity);
 }

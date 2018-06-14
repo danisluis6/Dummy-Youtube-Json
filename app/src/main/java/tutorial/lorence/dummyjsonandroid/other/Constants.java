@@ -19,4 +19,8 @@ public class Constants {
 
     private Constants() {
     }
+
+    public enum MVP {
+        _JSOUP, _JSON, _SQL
+    }
 }

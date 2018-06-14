@@ -9,6 +9,7 @@ import tutorial.lorence.dummyjsonandroid.di.component.DaggerAppComponent;
 import tutorial.lorence.dummyjsonandroid.di.module.AppModule;
 import tutorial.lorence.dummyjsonandroid.di.module.AsyntaskModule;
 import tutorial.lorence.dummyjsonandroid.di.module.DatabaseModule;
+import tutorial.lorence.dummyjsonandroid.di.module.JsoupModule;
 import tutorial.lorence.dummyjsonandroid.di.module.LoadingModule;
 
 /**
@@ -45,6 +46,7 @@ public class Application extends android.app.Application {
                 .loadingModule(new LoadingModule(this,mContext))
                 .databaseModule(new DatabaseModule(this, mContext))
                 .asyntaskModule(new AsyntaskModule(this, mContext))
+                .jsoupModule(new JsoupModule(this, mContext))
                 .build();
     }
 

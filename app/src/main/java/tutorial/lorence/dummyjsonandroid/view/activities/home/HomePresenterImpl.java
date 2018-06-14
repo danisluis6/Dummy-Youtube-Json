@@ -6,6 +6,7 @@ import java.util.List;
 
 import io.reactivex.disposables.Disposable;
 import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Item;
+import tutorial.lorence.dummyjsonandroid.other.Constants;
 import tutorial.lorence.dummyjsonandroid.service.DisposableManager;
 import tutorial.lorence.dummyjsonandroid.service.JsonData;
 
@@ -32,6 +33,7 @@ public class HomePresenterImpl implements HomePresenter {
         mHomeActivity = homeActivity;
         mDisposableManager = disposableManager;
         mJsonData = jsonData;
+        mHomeModel.attachActivity(mHomeActivity);
         mHomeModel.attachPresenter(this);
         mHomeModel.attachJsonData(mJsonData);
         mHomeModel.attachDisposable(disposableManager);
@@ -39,7 +41,7 @@ public class HomePresenterImpl implements HomePresenter {
 
     @Override
     public void getItems() {
-        mHomeModel.getItems();
+        mHomeModel.getItems(Constants.MVP._JSOUP);
     }
 
     @Override
