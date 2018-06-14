@@ -3,6 +3,7 @@
     android:id="@+id/imgDemo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:adjustViewBounds="false"
     android:contentDescription="@string/app_name"
     android:scaleType="fitXY"
     tools:context=".view.activities.home.HomeActivity" />
