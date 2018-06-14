@@ -7,6 +7,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import tutorial.lorence.dummyjsonandroid.app.Application;
+import tutorial.lorence.dummyjsonandroid.data.storage.database.DbAccess.DASchedule;
 import tutorial.lorence.dummyjsonandroid.other.GenerateWebsite;
 import tutorial.lorence.dummyjsonandroid.service.DisposableManager;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.HomeModel;
@@ -32,8 +33,14 @@ public class DatabaseModule {
 
     @Singleton
     @Provides
-    HomeModel provideHomeModel(GenerateWebsite generateWebsite) {
-        return new HomeModelImpl(mContext, generateWebsite);
+    DASchedule provideDASchedule() {
+        return new DASchedule();
+    }
+
+    @Singleton
+    @Provides
+    HomeModel provideHomeModel(GenerateWebsite generateWebsite, DASchedule daSchedule) {
+        return new HomeModelImpl(mContext, generateWebsite, daSchedule);
     }
 
     @Singleton

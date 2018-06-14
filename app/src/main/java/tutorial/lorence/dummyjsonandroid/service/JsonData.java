@@ -15,7 +15,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Item;
+import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.recycler.Item;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.HomeActivity;
 
 /**

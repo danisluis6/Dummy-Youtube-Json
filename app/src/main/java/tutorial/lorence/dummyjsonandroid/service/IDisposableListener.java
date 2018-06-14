@@ -2,7 +2,7 @@ package tutorial.lorence.dummyjsonandroid.service;
 
 import java.util.List;
 
-import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Item;
+import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.recycler.Item;
 
 /**
  * Created by vuongluis on 4/14/2018.

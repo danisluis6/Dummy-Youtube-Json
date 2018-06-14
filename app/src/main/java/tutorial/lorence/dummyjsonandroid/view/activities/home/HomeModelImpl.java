@@ -9,11 +9,14 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
 import tutorial.lorence.dummyjsonandroid.R;
-import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Item;
+import tutorial.lorence.dummyjsonandroid.data.storage.database.DbAccess.DASchedule;
+import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Schedule;
+import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.recycler.Item;
 import tutorial.lorence.dummyjsonandroid.other.Constants;
 import tutorial.lorence.dummyjsonandroid.other.GenerateWebsite;
 import tutorial.lorence.dummyjsonandroid.other.Utils;
@@ -36,10 +39,12 @@ public class HomeModelImpl implements HomeModel, IDisposableListener<Item> {
     private DisposableManager mDisposableManager;
     private GenerateWebsite mGenerateWebsite;
     private HomeActivity mHomeActivity;
+    private DASchedule mDaoSchedule;
 
-    public HomeModelImpl(Context context, GenerateWebsite generateWebsite) {
+    public HomeModelImpl(Context context, GenerateWebsite generateWebsite, DASchedule daoSchedule) {
         mContext = context;
         mGenerateWebsite = generateWebsite;
+        mDaoSchedule = daoSchedule;
     }
 
     @Override
@@ -71,29 +76,25 @@ public class HomeModelImpl implements HomeModel, IDisposableListener<Item> {
             } else {
                 mHomePresenter.onGetItemsFailure(mContext.getString(R.string.no_internet_connection));
             }
-        } else if (mvp == Constants.MVP._JSOUP){
+        } else if (mvp == Constants.MVP._JSOUP) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    final StringBuilder builder = new StringBuilder();
+                    final List<String> builder = new ArrayList<>();
                     try {
                         Document doc = Jsoup.connect(mGenerateWebsite.jsoup_URL()).get();
-                        String title = doc.title();
-                        Log.i("TAG", "title: "+doc.select("title"));
                         Elements trs = doc.getElementsByClass("ltd-tr2");
-
-                        builder.append(title).append("\n");
-
-                        for(Element tr: trs) {
-                            builder.append("\n").append("Info : ").append(tr.text());
+                        for (Element tr : trs) {
+                            builder.add(tr.text());
                         }
                     } catch (IOException e) {
-                        builder.append("Error : ").append(e.getMessage()).append("\n");
+                        e.printStackTrace();
                     }
                     mHomeActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Log.i("TAG", "Builder: "+builder);
+                            List<Schedule>  temps = Utils.convertStringToObject(builder);
+                            Log.i("TAG", "N = "+temps.size()+"");
                         }
                     });
                 }

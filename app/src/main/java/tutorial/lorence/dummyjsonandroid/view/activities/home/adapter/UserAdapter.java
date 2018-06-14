@@ -11,7 +11,7 @@ import com.google.android.gms.ads.formats.NativeAd;
 import java.util.List;
 
 import tutorial.lorence.dummyjsonandroid.R;
-import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Item;
+import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.recycler.Item;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.adapter.viewholder.CustomHolder;
 
 /**

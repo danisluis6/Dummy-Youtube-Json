@@ -5,7 +5,7 @@ import android.content.Context;
 import java.util.List;
 
 import io.reactivex.disposables.Disposable;
-import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Item;
+import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.recycler.Item;
 import tutorial.lorence.dummyjsonandroid.other.Constants;
 import tutorial.lorence.dummyjsonandroid.service.DisposableManager;
 import tutorial.lorence.dummyjsonandroid.service.JsonData;

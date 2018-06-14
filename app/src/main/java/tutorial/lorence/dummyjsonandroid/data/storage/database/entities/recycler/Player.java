@@ -1,4 +1,4 @@
-package tutorial.lorence.dummyjsonandroid.data.storage.database.entities;
+package tutorial.lorence.dummyjsonandroid.data.storage.database.entities.recycler;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

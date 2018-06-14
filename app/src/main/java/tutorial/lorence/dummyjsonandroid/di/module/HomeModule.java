@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import dagger.Module;
 import dagger.Provides;
-import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Item;
+import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.recycler.Item;
 import tutorial.lorence.dummyjsonandroid.di.scope.ActivityScope;
 import tutorial.lorence.dummyjsonandroid.service.DisposableManager;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.HomeModel;

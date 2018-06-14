@@ -11,7 +11,7 @@ import javax.inject.Inject;
 import io.reactivex.disposables.Disposable;
 import tutorial.lorence.dummyjsonandroid.R;
 import tutorial.lorence.dummyjsonandroid.app.Application;
-import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Item;
+import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.recycler.Item;
 import tutorial.lorence.dummyjsonandroid.di.module.HomeModule;
 import tutorial.lorence.dummyjsonandroid.service.JsonData;
 import tutorial.lorence.dummyjsonandroid.service.asyntask.DownloadImage;
