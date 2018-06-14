@@ -4,12 +4,14 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import io.reactivex.disposables.Disposable;
 import tutorial.lorence.dummyjsonandroid.R;
 import tutorial.lorence.dummyjsonandroid.app.Application;
@@ -29,8 +31,6 @@ import tutorial.lorence.dummyjsonandroid.view.activities.home.loading.FragmentLo
  */
 
 public class HomeActivity extends BaseActivity implements HomeView {
-
-    private List<Item> mGroupItems = new ArrayList<>();
 
     @Inject
     FragmentLoading mFragmentLoading;
@@ -71,12 +71,12 @@ public class HomeActivity extends BaseActivity implements HomeView {
     @Override
     protected void initAttributes(Bundle savedInstanceState) {
         super.initAttributes(savedInstanceState);
+        mFragmentContent.distributedDaggerComponents(this);
         if (savedInstanceState == null) {
             mFragmentTransaction.add(R.id.fragment_container, mFragmentLoading);
             mFragmentTransaction.commit();
             mHomePresenter.getItems();
         }
-        mFragmentContent.distributedDaggerComponents(this);
     }
 
     @Override
@@ -87,7 +87,9 @@ public class HomeActivity extends BaseActivity implements HomeView {
     @Override
     public void onGetItemsSuccess(List<Item> items) {
         String url = items.get(0).getData().getThumbnail().getHqDefault();
-        mFragmentContent.updateURL(url);
+        Bundle bundle = new Bundle();
+        bundle.putString("sURL", url);
+        mFragmentContent.setArguments(bundle);
         loadFragmentContent();
     }
 
@@ -97,16 +99,10 @@ public class HomeActivity extends BaseActivity implements HomeView {
     }
 
     private void loadFragmentContent() {
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mFragmentTransaction = getSupportFragmentManager().beginTransaction();
-                mFragmentTransaction.replace(R.id.fragment_container, mFragmentContent);
-                mFragmentTransaction.disallowAddToBackStack();
-                mFragmentTransaction.commit();
-            }
-        }, 1000);
+        mFragmentTransaction = getSupportFragmentManager().beginTransaction();
+        mFragmentTransaction.replace(R.id.fragment_container, mFragmentContent);
+        mFragmentTransaction.disallowAddToBackStack();
+        mFragmentTransaction.commit();
     }
 
     @Override
@@ -115,9 +111,5 @@ public class HomeActivity extends BaseActivity implements HomeView {
         if (mDisposable != null) {
             mDisposable.dispose();
         }
-    }
-
-    public List<Item> getGroupItems() {
-        return mGroupItems;
     }
 }

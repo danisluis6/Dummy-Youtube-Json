@@ -82,8 +82,8 @@ public class HomeModule {
 
     @Provides
     @ActivityScope
-    FragmentContent provideFragmentRecycler(Context context, HomeActivity homeActivity, UserAdapter userAdapter) {
-        return new FragmentContent(context, homeActivity, userAdapter);
+    FragmentContent provideFragmentRecycler() {
+        return new FragmentContent();
     }
 
     @Provides
