@@ -1,6 +1,7 @@
 package tutorial.lorence.dummyjsonandroid.view.activities.home;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -65,13 +66,20 @@ public class HomeModelImpl implements HomeModel, IDisposableListener<Schedule> {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    final List<String> builder = new ArrayList<>();
+                    final List<String> content = new ArrayList<>();
+                    final List<String> flag = new ArrayList<>();
                     try {
                         Document doc = Jsoup.connect(mGenerateWebsite.jsoup_URL()).get();
                         Elements trs = doc.getElementsByClass("ltd-tr2");
                         for (Element tr : trs) {
-                            builder.add(tr.text());
+                            content.add(tr.text());
                         }
+
+                        Elements arrImage = doc.select("img");
+                        for (Element img : arrImage) {
+                            flag.add(img.absUrl("src"));
+                        }
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -79,7 +87,7 @@ public class HomeModelImpl implements HomeModel, IDisposableListener<Schedule> {
                         @Override
                         public void run() {
                             if (mDaoSchedule.getAll(mContext).size() == 0) {
-                                mDaoSchedule.addAll(Utils.convertStringToObject(builder), mContext);
+                                mDaoSchedule.addAll(Utils.convertStringToObject(content, flag), mContext);
                             }
                             if (Utils.isInternetOn(mContext)) {
                                 mHomePresenter.setDisposable(mDisposableManager.callDisposable(Observable.just(mDaoSchedule.getAll(mContext))));

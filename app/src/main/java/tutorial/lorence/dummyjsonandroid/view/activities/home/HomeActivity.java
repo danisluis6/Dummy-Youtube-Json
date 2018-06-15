@@ -83,7 +83,6 @@ public class HomeActivity extends BaseActivity implements HomeView {
 
     @Override
     public void onGetItemsSuccess(List<Schedule> items) {
-        Log.i("TAG", items.get(0).getDate() + ": " + items.get(0).getPlayer() + " >< " + items.get(0).getEnemy() + " : " + items.get(0).getTime());
 //        Bundle bundle = new Bundle();
 //        bundle.putString("sURL", url);
 //        mFragmentContent.setArguments(bundle);

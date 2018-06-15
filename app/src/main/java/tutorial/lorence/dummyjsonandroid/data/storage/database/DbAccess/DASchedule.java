@@ -27,7 +27,9 @@ public class DASchedule {
     private ContentValues getContentValues(final Schedule schedule, Context context) {
         ContentValues values = new ContentValues();
         values.put(DbContract.TableSchedule.COLUMN_NAME_PLAYER, schedule.getPlayer());
+        values.put(DbContract.TableSchedule.COLUMN_NAME_PLAYER_PATH, schedule.getPlayerPath());
         values.put(DbContract.TableSchedule.COLUMN_NAME_ENEMY, schedule.getEnemy());
+        values.put(DbContract.TableSchedule.COLUMN_NAME_ENEMY_PATH, schedule.getEnemyPath());
         values.put(DbContract.TableSchedule.COLUMN_NAME_TIME, schedule.getTime());
         values.put(DbContract.TableSchedule.COLUMN_NAME_DATE, schedule.getDate());
         return values;
@@ -36,10 +38,12 @@ public class DASchedule {
     private Schedule getFromCursor(final Cursor cursor) {
         int scheduleId = cursor.getInt(cursor.getColumnIndex(DbContract.TableSchedule.COLUMN_NAME_INDEX));
         String player = cursor.getString(cursor.getColumnIndex(DbContract.TableSchedule.COLUMN_NAME_PLAYER));
+        String player_path = cursor.getString(cursor.getColumnIndex(DbContract.TableSchedule.COLUMN_NAME_PLAYER_PATH));
         String enemy = cursor.getString(cursor.getColumnIndex(DbContract.TableSchedule.COLUMN_NAME_ENEMY));
+        String enemy_path = cursor.getString(cursor.getColumnIndex(DbContract.TableSchedule.COLUMN_NAME_ENEMY_PATH));
         String time = cursor.getString(cursor.getColumnIndex(DbContract.TableSchedule.COLUMN_NAME_TIME));
         String date = cursor.getString(cursor.getColumnIndex(DbContract.TableSchedule.COLUMN_NAME_DATE));
-        return new Schedule(scheduleId, player, enemy, time, date);
+        return new Schedule(scheduleId, player, player_path, enemy, enemy_path, time, date);
     }
 
     public long add(Schedule schedule, Context context) {
@@ -58,7 +62,9 @@ public class DASchedule {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(DbContract.TableSchedule.COLUMN_NAME_PLAYER, schedule.getPlayer());
+        cv.put(DbContract.TableSchedule.COLUMN_NAME_PLAYER_PATH, schedule.getPlayerPath());
         cv.put(DbContract.TableSchedule.COLUMN_NAME_ENEMY, schedule.getEnemy());
+        cv.put(DbContract.TableSchedule.COLUMN_NAME_ENEMY_PATH, schedule.getEnemyPath());
         cv.put(DbContract.TableSchedule.COLUMN_NAME_TIME, schedule.getTime());
         cv.put(DbContract.TableSchedule.COLUMN_NAME_DATE, schedule.getDate());
         try {
@@ -87,7 +93,9 @@ public class DASchedule {
         return new String[]{
                 DbContract.TableSchedule.COLUMN_NAME_INDEX,
                 DbContract.TableSchedule.COLUMN_NAME_PLAYER,
+                DbContract.TableSchedule.COLUMN_NAME_PLAYER_PATH,
                 DbContract.TableSchedule.COLUMN_NAME_ENEMY,
+                DbContract.TableSchedule.COLUMN_NAME_ENEMY_PATH,
                 DbContract.TableSchedule.COLUMN_NAME_TIME,
                 DbContract.TableSchedule.COLUMN_NAME_DATE
         };

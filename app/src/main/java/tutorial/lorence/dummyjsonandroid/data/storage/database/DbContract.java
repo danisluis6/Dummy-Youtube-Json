@@ -48,7 +48,11 @@ public final class DbContract {
             .append(COMMA_SEP)
             .append(TableSchedule.COLUMN_NAME_PLAYER).append(TEXT_TYPE)
             .append(COMMA_SEP)
+            .append(TableSchedule.COLUMN_NAME_PLAYER_PATH).append(TEXT_TYPE)
+            .append(COMMA_SEP)
             .append(TableSchedule.COLUMN_NAME_ENEMY).append(TEXT_TYPE)
+            .append(COMMA_SEP)
+            .append(TableSchedule.COLUMN_NAME_ENEMY_PATH).append(TEXT_TYPE)
             .append(COMMA_SEP)
             .append(TableSchedule.COLUMN_NAME_TIME).append(TEXT_TYPE)
             .append(COMMA_SEP)
@@ -75,7 +79,9 @@ public final class DbContract {
         public static final String TABLE_NAME = "schedule";
         public static final String COLUMN_NAME_INDEX = "id";
         public static final String COLUMN_NAME_PLAYER = "player";
+        public static final String COLUMN_NAME_PLAYER_PATH = "player_path";
         public static final String COLUMN_NAME_ENEMY = "enemy";
+        public static final String COLUMN_NAME_ENEMY_PATH = "enemy_path";
         public static final String COLUMN_NAME_TIME = "time";
         public static final String COLUMN_NAME_DATE = "date";
     }
