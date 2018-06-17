@@ -68,43 +68,47 @@ public class ScheduleModelImpl implements ScheduleModel, IDisposableListener<Sch
 
     @Override
     public void getItems(Constants.MVP mvp) {
-        if (mvp == Constants.MVP._JSOUP) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    final List<String> content = new ArrayList<>();
-                    final List<String> flag = new ArrayList<>();
-                    try {
-                        Document doc = Jsoup.connect(mGenerateWebsite.jsoup_URL()).get();
-                        Elements trs = doc.getElementsByClass("ltd-tr2");
-                        for (Element tr : trs) {
-                            content.add(tr.text());
-                        }
+        if (!Utils.isInternetOn(mContext)) {
+            mSchedulePresenter.setDisposable(mDisposableManager.callDisposable(Observable.just(mDaoSchedule.getAll(mContext))));
+        } else {
+            if (mvp == Constants.MVP._JSOUP) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        final List<String> content = new ArrayList<>();
+                        final List<String> flag = new ArrayList<>();
+                        try {
+                            Document doc = Jsoup.connect(mGenerateWebsite.jsoup_URL()).get();
+                            Elements trs = doc.getElementsByClass("ltd-tr2");
+                            for (Element tr : trs) {
+                                content.add(tr.text());
+                            }
 
-                        Elements arrImage = doc.select("img");
-                        for (Element img : arrImage) {
-                            flag.add(img.absUrl("src"));
-                        }
+                            Elements arrImage = doc.select("img");
+                            for (Element img : arrImage) {
+                                flag.add(img.absUrl("src"));
+                            }
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        mHomeActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (mDaoSchedule.getAll(mContext).size() == 0) {
+                                    mDaoSchedule.addAll(Utils.convertStringToObject(content, flag), mContext);
+                                }
+                                if (Utils.isInternetOn(mContext)) {
+                                    mSchedulePresenter.setDisposable(mDisposableManager.callDisposable(Observable.just(mDaoSchedule.getAll(mContext))));
+                                } else {
+                                    mSchedulePresenter.onGetItemsFailure(mContext.getString(R.string.no_internet_connection));
+                                }
+                            }
+                        });
                     }
-                    mHomeActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (mDaoSchedule.getAll(mContext).size() == 0) {
-                                mDaoSchedule.addAll(Utils.convertStringToObject(content, flag), mContext);
-                            }
-                            if (Utils.isInternetOn(mContext)) {
-                                mSchedulePresenter.setDisposable(mDisposableManager.callDisposable(Observable.just(mDaoSchedule.getAll(mContext))));
-                            } else {
-                                mSchedulePresenter.onGetItemsFailure(mContext.getString(R.string.no_internet_connection));
-                            }
-                        }
-                    });
-                }
 
-            }).start();
+                }).start();
+            }
         }
     }
 
