@@ -36,6 +36,7 @@ public class SplashActivity extends BaseActivity {
 
     private void moveToNextActivity() {
         startActivity(new Intent(SplashActivity.this, HomeActivity.class));
+        finish();
     }
 
 }

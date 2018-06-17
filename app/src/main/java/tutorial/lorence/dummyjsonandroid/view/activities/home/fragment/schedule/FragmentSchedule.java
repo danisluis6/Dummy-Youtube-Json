@@ -3,6 +3,7 @@ package tutorial.lorence.dummyjsonandroid.view.activities.home.fragment.schedule
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -56,10 +57,17 @@ public class FragmentSchedule extends BaseFragment implements ScheduleView {
     @Inject
     SchedulePresenter mSchedulePresenter;
 
+    @Inject
+    FragmentSchedule mFragmentSchedule;
+
     @BindView(R.id.rcvSchedules)
     RecyclerView rcvSchedules;
 
-    private FragmentTransaction mFragmentMFragmentTransaction;
+    @BindView(R.id.rcvSchedulesToday)
+    RecyclerView rcvSchedulesToday;
+
+    private FragmentManager mFragmentManager;
+    private FragmentTransaction mFragmentTransaction;
     private Disposable mDisposable;
 
     public void distributedDaggerComponents(HomeActivity homeActivity) {
@@ -83,19 +91,16 @@ public class FragmentSchedule extends BaseFragment implements ScheduleView {
     @SuppressLint("CommitTransaction")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_content, container, false);
+        View view = inflater.inflate(R.layout.fragment_schedule, container, false);
         bindView(view);
         initComponents();
-        return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mFragmentMFragmentTransaction = getChildFragmentManager().beginTransaction();
-        mFragmentMFragmentTransaction.add(R.id.fragment_container, mFragmentLoading);
-        mFragmentMFragmentTransaction.commit();
+        mFragmentManager = this.getChildFragmentManager();
+        mFragmentTransaction = mFragmentManager.beginTransaction();
+        mFragmentTransaction.add(R.id.fragment_container, mFragmentLoading);
+        mFragmentTransaction.addToBackStack(null);
+        mFragmentTransaction.commit();
         mSchedulePresenter.getItems();
+        return view;
     }
 
     @Override
@@ -109,9 +114,9 @@ public class FragmentSchedule extends BaseFragment implements ScheduleView {
     @Override
     public void onGetItemsSuccess(ArrayList<Schedule> items) {
         mScheduleAdapter.updateSchedules(items);
-        mFragmentMFragmentTransaction = getChildFragmentManager().beginTransaction();
-        mFragmentMFragmentTransaction.remove(mFragmentLoading);
-        mFragmentMFragmentTransaction.commit();
+        if (this.getChildFragmentManager().getBackStackEntryCount() > 0) {
+            mFragmentManager.popBackStack();
+        }
     }
 
     @Override
