@@ -2,7 +2,7 @@ package tutorial.lorence.dummyjsonandroid.view.activities.home;
 
 import android.content.Context;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import io.reactivex.disposables.Disposable;
 import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Schedule;
@@ -44,7 +44,7 @@ public class HomePresenterImpl implements HomePresenter {
     }
 
     @Override
-    public void onGetItemsSuccess(List<Schedule> items) {
+    public void onGetItemsSuccess(ArrayList<Schedule> items) {
         mHomeView.onGetItemsSuccess(items);
     }
 

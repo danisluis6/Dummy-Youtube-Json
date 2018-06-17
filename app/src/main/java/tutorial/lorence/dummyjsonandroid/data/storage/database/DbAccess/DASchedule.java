@@ -101,8 +101,8 @@ public class DASchedule {
         };
     }
 
-    public List<Schedule> getAll(Context context) {
-        List<Schedule> listContact = new ArrayList<>();
+    public ArrayList<Schedule> getAll(Context context) {
+        ArrayList<Schedule> listContact = new ArrayList<>();
         DbHelper dbHelper = DbHelper.getInstance(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         if (db != null && db.isOpen()) {

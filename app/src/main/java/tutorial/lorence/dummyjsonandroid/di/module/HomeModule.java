@@ -1,6 +1,7 @@
 package tutorial.lorence.dummyjsonandroid.di.module;
 
 import android.content.Context;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import java.util.ArrayList;
@@ -15,8 +16,9 @@ import tutorial.lorence.dummyjsonandroid.view.activities.home.HomePresenter;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.HomePresenterImpl;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.HomeView;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.adapter.UserAdapter;
+import tutorial.lorence.dummyjsonandroid.view.activities.home.adapter.ViewPaperAdapter;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.adapter.ViewType;
-import tutorial.lorence.dummyjsonandroid.view.activities.home.fragment.FragmentContent;
+import tutorial.lorence.dummyjsonandroid.view.activities.home.fragment.schedule.FragmentSchedule;
 import tutorial.lorence.dummyjsonandroid.service.JsonData;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.HomeActivity;
 
@@ -70,6 +72,18 @@ public class HomeModule {
 
     @Provides
     @ActivityScope
+    FragmentManager provideFragmentManager()  {
+        return mHomeActivity.getSupportFragmentManager();
+    }
+
+    @Provides
+    @ActivityScope
+    ViewPaperAdapter provideViewPagerAdapter(HomeActivity homeActivity, FragmentManager fragmentManager, FragmentSchedule fragmentSchedule) {
+        return new ViewPaperAdapter(homeActivity, fragmentManager, fragmentSchedule);
+    }
+
+    @Provides
+    @ActivityScope
     ViewType provideViewType() {
         return new ViewType();
     }
@@ -82,8 +96,8 @@ public class HomeModule {
 
     @Provides
     @ActivityScope
-    FragmentContent provideFragmentRecycler() {
-        return new FragmentContent();
+    FragmentSchedule provideFragmentRecycler() {
+        return new FragmentSchedule();
     }
 
     @Provides

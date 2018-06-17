@@ -1,4 +1,4 @@
-package tutorial.lorence.dummyjsonandroid.view.activities.home;
+package tutorial.lorence.dummyjsonandroid.view.activities.home.fragment.schedule;
 
 import android.content.Context;
 
@@ -20,6 +20,7 @@ import tutorial.lorence.dummyjsonandroid.other.GenerateWebsite;
 import tutorial.lorence.dummyjsonandroid.other.Utils;
 import tutorial.lorence.dummyjsonandroid.service.DisposableManager;
 import tutorial.lorence.dummyjsonandroid.service.IDisposableListener;
+import tutorial.lorence.dummyjsonandroid.view.activities.home.HomeActivity;
 
 /**
  * Created by vuongluis on 4/14/2018.
@@ -28,24 +29,25 @@ import tutorial.lorence.dummyjsonandroid.service.IDisposableListener;
  * @version 0.0.1
  */
 
-public class HomeModelImpl implements HomeModel, IDisposableListener<Schedule> {
+public class ScheduleModelImpl implements ScheduleModel, IDisposableListener<Schedule> {
 
     private Context mContext;
-    private HomePresenter mHomePresenter;
+    private HomeActivity mHomeActivity;
+    private SchedulePresenter mSchedulePresenter;
     private DisposableManager mDisposableManager;
     private GenerateWebsite mGenerateWebsite;
-    private HomeActivity mHomeActivity;
+    private FragmentSchedule mFragmentSchedule;
     private DASchedule mDaoSchedule;
 
-    public HomeModelImpl(Context context, GenerateWebsite generateWebsite, DASchedule daoSchedule) {
+    public ScheduleModelImpl(Context context, GenerateWebsite generateWebsite, DASchedule daoSchedule) {
         mContext = context;
         mGenerateWebsite = generateWebsite;
         mDaoSchedule = daoSchedule;
     }
 
     @Override
-    public void attachPresenter(HomePresenterImpl homePresenter) {
-        mHomePresenter = homePresenter;
+    public void attachFragment(FragmentSchedule fragmentSchedule) {
+        mFragmentSchedule = fragmentSchedule;
     }
 
     @Override
@@ -54,9 +56,14 @@ public class HomeModelImpl implements HomeModel, IDisposableListener<Schedule> {
     }
 
     @Override
+    public void attachPresenter(SchedulePresenter presenter) {
+        mSchedulePresenter = presenter;
+    }
+
+    @Override
     public void attachDisposable(DisposableManager disposableManager) {
         mDisposableManager = disposableManager;
-        mDisposableManager.setDisposableInterface(this);
+        mDisposableManager.setInterfaceOnSchedule(this);
     }
 
     @Override
@@ -89,9 +96,9 @@ public class HomeModelImpl implements HomeModel, IDisposableListener<Schedule> {
                                 mDaoSchedule.addAll(Utils.convertStringToObject(content, flag), mContext);
                             }
                             if (Utils.isInternetOn(mContext)) {
-                                mHomePresenter.setDisposable(mDisposableManager.callDisposable(Observable.just(mDaoSchedule.getAll(mContext))));
+                                mSchedulePresenter.setDisposable(mDisposableManager.callDisposable(Observable.just(mDaoSchedule.getAll(mContext))));
                             } else {
-                                mHomePresenter.onGetItemsFailure(mContext.getString(R.string.no_internet_connection));
+                                mSchedulePresenter.onGetItemsFailure(mContext.getString(R.string.no_internet_connection));
                             }
                         }
                     });
@@ -107,11 +114,11 @@ public class HomeModelImpl implements HomeModel, IDisposableListener<Schedule> {
 
     @Override
     public void onHandleData(ArrayList<Schedule> items) {
-        mHomePresenter.onGetItemsSuccess(mDaoSchedule.getAll(mContext));
+        mSchedulePresenter.onGetItemsSuccess(mDaoSchedule.getAll(mContext));
     }
 
     @Override
     public void onApiFailure(Throwable error) {
-        mHomePresenter.onGetItemsFailure(mContext.getString(R.string.error_time_out));
+        mSchedulePresenter.onGetItemsFailure(mContext.getString(R.string.error_time_out));
     }
 }

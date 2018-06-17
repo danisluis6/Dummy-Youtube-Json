@@ -1,11 +1,9 @@
-package tutorial.lorence.dummyjsonandroid.view.activities.home;
+package tutorial.lorence.dummyjsonandroid.view.activities.home.fragment.schedule;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import io.reactivex.disposables.Disposable;
 import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Schedule;
-import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.recycler.Item;
 
 /**
  * Created by vuongluis on 4/14/2018.
@@ -14,12 +12,9 @@ import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.recycler
  * @version 0.0.1
  */
 
-public interface HomePresenter {
-    void getItems();
-
-    void setDisposable(Disposable disposable);
-
+public interface ScheduleView {
+    void initComponents();
     void onGetItemsSuccess(ArrayList<Schedule> items);
-
     void onGetItemsFailure(String message);
+    void setDisposable(Disposable disposable);
 }

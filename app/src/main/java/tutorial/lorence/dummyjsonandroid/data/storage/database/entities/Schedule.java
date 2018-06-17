@@ -1,5 +1,11 @@
 package tutorial.lorence.dummyjsonandroid.data.storage.database.entities;
 
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
+
 /**
  * Created by vuongluis on 4/14/2018.
  *
@@ -7,7 +13,7 @@ package tutorial.lorence.dummyjsonandroid.data.storage.database.entities;
  * @version 0.0.1
  */
 
-public class Schedule {
+public class Schedule implements Parcelable {
 
     private int index;
     private String player;
@@ -16,6 +22,7 @@ public class Schedule {
     private String enemy_path;
     private String time;
     private String date;
+    public ArrayList<Schedule> schedules;
 
     public Schedule() {
     }
@@ -38,6 +45,28 @@ public class Schedule {
         this.time = time;
         this.date = date;
     }
+
+    protected Schedule(Parcel in) {
+        index = in.readInt();
+        player = in.readString();
+        player_path = in.readString();
+        enemy = in.readString();
+        enemy_path = in.readString();
+        time = in.readString();
+        date = in.readString();
+    }
+
+    public static final Creator<Schedule> CREATOR = new Creator<Schedule>() {
+        @Override
+        public Schedule createFromParcel(Parcel in) {
+            return new Schedule(in);
+        }
+
+        @Override
+        public Schedule[] newArray(int size) {
+            return new Schedule[size];
+        }
+    };
 
     public int getIndex() {
         return index;
@@ -93,5 +122,21 @@ public class Schedule {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(index);
+        dest.writeString(player);
+        dest.writeString(player_path);
+        dest.writeString(enemy);
+        dest.writeString(enemy_path);
+        dest.writeString(time);
+        dest.writeString(date);
     }
 }

@@ -1,6 +1,6 @@
 package tutorial.lorence.dummyjsonandroid.service;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -10,8 +10,8 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Schedule;
-import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.recycler.Item;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.HomeModelImpl;
+import tutorial.lorence.dummyjsonandroid.view.activities.home.fragment.schedule.ScheduleModelImpl;
 
 /**
  * Created by vuongluis on 4/14/2018.
@@ -33,17 +33,21 @@ public class DisposableManager {
         this.listener = disposableInterface;
     }
 
-    public Disposable callDisposable(Observable<List<Schedule>> observable) {
+    public void setInterfaceOnSchedule(ScheduleModelImpl disposableInterface) {
+        this.listener = disposableInterface;
+    }
+
+    public Disposable callDisposable(Observable<ArrayList<Schedule>> observable) {
         disposable = observable.subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableObserver<List<Schedule>>() {
+                .subscribeWith(new DisposableObserver<ArrayList<Schedule>>() {
                     @Override
                     public void onComplete() {
                         listener.onComplete();
                     }
 
                     @Override
-                    public void onNext(List<Schedule> items) {
+                    public void onNext(ArrayList<Schedule> items) {
                         listener.onHandleData(items);
                     }
 

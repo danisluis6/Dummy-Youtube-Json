@@ -1,9 +1,9 @@
 package tutorial.lorence.dummyjsonandroid.di.component;
 
 import dagger.Subcomponent;
-import tutorial.lorence.dummyjsonandroid.di.module.FragmentModule;
+import tutorial.lorence.dummyjsonandroid.di.module.ScheduleModule;
 import tutorial.lorence.dummyjsonandroid.di.scope.FragmentScope;
-import tutorial.lorence.dummyjsonandroid.view.activities.home.fragment.FragmentContent;
+import tutorial.lorence.dummyjsonandroid.view.activities.home.fragment.schedule.FragmentSchedule;
 
 /**
  * Created by vuongluis on 4/14/2018.
@@ -16,11 +16,11 @@ import tutorial.lorence.dummyjsonandroid.view.activities.home.fragment.FragmentC
 @Subcomponent(
 
         modules = {
-                FragmentModule.class
+                ScheduleModule.class
         }
 )
 public interface FragmentComponent {
-    FragmentContent inject(FragmentContent fragmentContent);
+    FragmentSchedule inject(FragmentSchedule fragmentSchedule);
 }
 
 

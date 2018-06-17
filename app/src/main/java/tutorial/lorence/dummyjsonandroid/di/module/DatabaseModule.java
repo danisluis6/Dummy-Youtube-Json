@@ -12,6 +12,8 @@ import tutorial.lorence.dummyjsonandroid.other.GenerateWebsite;
 import tutorial.lorence.dummyjsonandroid.service.DisposableManager;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.HomeModel;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.HomeModelImpl;
+import tutorial.lorence.dummyjsonandroid.view.activities.home.fragment.schedule.ScheduleModel;
+import tutorial.lorence.dummyjsonandroid.view.activities.home.fragment.schedule.ScheduleModelImpl;
 
 /**
  * Created by vuongluis on 4/14/2018.
@@ -41,6 +43,12 @@ public class DatabaseModule {
     @Provides
     HomeModel provideHomeModel(GenerateWebsite generateWebsite, DASchedule daSchedule) {
         return new HomeModelImpl(mContext, generateWebsite, daSchedule);
+    }
+
+    @Singleton
+    @Provides
+    ScheduleModel provideScheduleModel(GenerateWebsite generateWebsite, DASchedule daSchedule) {
+        return new ScheduleModelImpl(mContext, generateWebsite, daSchedule);
     }
 
     @Singleton

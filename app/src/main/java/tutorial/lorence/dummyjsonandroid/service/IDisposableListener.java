@@ -1,6 +1,6 @@
 package tutorial.lorence.dummyjsonandroid.service;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Schedule;
 
@@ -14,7 +14,7 @@ import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Schedule
 public interface IDisposableListener<T> {
     void onComplete();
 
-    void onHandleData(List<Schedule> items);
+    void onHandleData(ArrayList<Schedule> items);
 
     void onApiFailure(Throwable error);
 }

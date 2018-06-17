@@ -1,15 +1,23 @@
 package tutorial.lorence.dummyjsonandroid.view.activities.home;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import io.reactivex.disposables.Disposable;
+import it.neokree.materialtabs.MaterialTab;
+import it.neokree.materialtabs.MaterialTabHost;
+import it.neokree.materialtabs.MaterialTabListener;
 import tutorial.lorence.dummyjsonandroid.R;
 import tutorial.lorence.dummyjsonandroid.app.Application;
 import tutorial.lorence.dummyjsonandroid.data.storage.database.entities.Schedule;
@@ -17,8 +25,7 @@ import tutorial.lorence.dummyjsonandroid.di.module.HomeModule;
 import tutorial.lorence.dummyjsonandroid.service.JsonData;
 import tutorial.lorence.dummyjsonandroid.service.asyntask.DownloadImage;
 import tutorial.lorence.dummyjsonandroid.view.activities.BaseActivity;
-import tutorial.lorence.dummyjsonandroid.view.activities.home.fragment.FragmentContent;
-import tutorial.lorence.dummyjsonandroid.view.activities.home.loading.FragmentLoading;
+import tutorial.lorence.dummyjsonandroid.view.activities.home.adapter.ViewPaperAdapter;
 
 /**
  * Created by vuongluis on 4/14/2018.
@@ -27,10 +34,7 @@ import tutorial.lorence.dummyjsonandroid.view.activities.home.loading.FragmentLo
  * @version 0.0.1
  */
 
-public class HomeActivity extends BaseActivity implements HomeView {
-
-    @Inject
-    FragmentLoading mFragmentLoading;
+public class HomeActivity extends BaseActivity implements HomeView, MaterialTabListener {
 
     @Inject
     Context mContext;
@@ -42,13 +46,23 @@ public class HomeActivity extends BaseActivity implements HomeView {
     JsonData mJsonData;
 
     @Inject
-    FragmentContent mFragmentContent;
-
-    @Inject
     HomePresenter mHomePresenter;
 
     @Inject
     DownloadImage mDownloadImage;
+
+    @Inject
+    ViewPaperAdapter mPaperAdapter;
+
+
+    @BindView(R.id.pager)
+    ViewPager mViewPager;
+
+    @BindView(R.id.tabHost)
+    MaterialTabHost mTabHost;
+
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
     private Disposable mDisposable;
 
@@ -68,12 +82,46 @@ public class HomeActivity extends BaseActivity implements HomeView {
     @Override
     protected void initAttributes(Bundle savedInstanceState) {
         super.initAttributes(savedInstanceState);
-        mFragmentContent.distributedDaggerComponents(this);
-        if (savedInstanceState == null) {
-            mFragmentTransaction.add(R.id.fragment_container, mFragmentLoading);
-            mFragmentTransaction.commit();
-            mHomePresenter.getItems();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            this.getWindow().setStatusBarColor(ContextCompat.getColor(HomeActivity.this, R.color.home_statusbar_color));
         }
+        mToolbar.setTitleTextColor(Color.WHITE);
+        setSupportActionBar(mToolbar);
+        mViewPager.setAdapter(mPaperAdapter);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mTabHost.setSelectedNavigationItem(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        for (int index = 0; index < mPaperAdapter.getCount(); index++) {
+            mTabHost.addTab(mTabHost.newTab()
+                    .setIcon(this.getResources()
+                            .getDrawable(getResId(index)))
+                    .setTabListener(this));
+        }
+    }
+
+    private int getResId(int index) {
+        if (index == 0) {
+            return R.drawable.ic_calendar;
+        } else if (index == 1) {
+            return R.drawable.ic_result;
+        } else if (index == 2) {
+            return R.drawable.ic_team;
+        }
+        return 0;
     }
 
     @Override
@@ -82,23 +130,12 @@ public class HomeActivity extends BaseActivity implements HomeView {
     }
 
     @Override
-    public void onGetItemsSuccess(List<Schedule> items) {
-//        Bundle bundle = new Bundle();
-//        bundle.putString("sURL", url);
-//        mFragmentContent.setArguments(bundle);
-        loadFragmentContent();
+    public void onGetItemsSuccess(ArrayList<Schedule> items) {
     }
 
     @Override
     public void onGetItemsFailure(String message) {
 
-    }
-
-    private void loadFragmentContent() {
-        mFragmentTransaction = getSupportFragmentManager().beginTransaction();
-        mFragmentTransaction.replace(R.id.fragment_container, mFragmentContent);
-        mFragmentTransaction.disallowAddToBackStack();
-        mFragmentTransaction.commit();
     }
 
     @Override
@@ -107,5 +144,20 @@ public class HomeActivity extends BaseActivity implements HomeView {
         if (mDisposable != null) {
             mDisposable.dispose();
         }
+    }
+
+    @Override
+    public void onTabSelected(MaterialTab tab) {
+        // TODO
+    }
+
+    @Override
+    public void onTabReselected(MaterialTab tab) {
+        // TODO
+    }
+
+    @Override
+    public void onTabUnselected(MaterialTab tab) {
+        // TODO
     }
 }
