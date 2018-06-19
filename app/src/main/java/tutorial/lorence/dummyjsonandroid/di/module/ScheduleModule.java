@@ -14,6 +14,7 @@ import tutorial.lorence.dummyjsonandroid.view.activities.home.HomeActivity;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.HomeModel;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.HomePresenter;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.HomePresenterImpl;
+import tutorial.lorence.dummyjsonandroid.view.activities.home.fragment.adapter.ScheduleToDayAdapter;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.fragment.schedule.ScheduleModel;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.fragment.schedule.SchedulePresenter;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.fragment.schedule.SchedulePresenterImpl;
@@ -43,6 +44,12 @@ public class ScheduleModule {
     @FragmentScope
     ScheduleAdapter provideScheduleAdapter(Context context) {
         return new ScheduleAdapter(context, mFragment, new ArrayList<Schedule>());
+    }
+
+    @Provides
+    @FragmentScope
+    ScheduleToDayAdapter provideScheduleToDayAdapter(Context context) {
+        return new ScheduleToDayAdapter(context, mFragment, new ArrayList<Schedule>());
     }
 
     /**

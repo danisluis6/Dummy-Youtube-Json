@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -26,6 +27,7 @@ import tutorial.lorence.dummyjsonandroid.di.module.ScheduleModule;
 import tutorial.lorence.dummyjsonandroid.service.asyntask.DownloadImage;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.HomeActivity;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.fragment.adapter.ScheduleAdapter;
+import tutorial.lorence.dummyjsonandroid.view.activities.home.fragment.adapter.ScheduleToDayAdapter;
 import tutorial.lorence.dummyjsonandroid.view.activities.home.loading.FragmentLoading;
 import tutorial.lorence.dummyjsonandroid.view.fragments.BaseFragment;
 
@@ -50,6 +52,9 @@ public class FragmentSchedule extends BaseFragment implements ScheduleView {
 
     @Inject
     ScheduleAdapter mScheduleAdapter;
+
+    @Inject
+    ScheduleToDayAdapter mShScheduleToDayAdapter;
 
     @Inject
     FragmentLoading mFragmentLoading;
@@ -105,18 +110,31 @@ public class FragmentSchedule extends BaseFragment implements ScheduleView {
 
     @Override
     public void initComponents() {
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
-        rcvSchedules.setLayoutManager(mLayoutManager);
+        rcvSchedules.setLayoutManager(new LinearLayoutManager(mContext));
+        rcvSchedulesToday.setLayoutManager(new LinearLayoutManager(mContext));
         rcvSchedules.setItemAnimator(new DefaultItemAnimator());
+        rcvSchedulesToday.setItemAnimator(new DefaultItemAnimator());
         rcvSchedules.setAdapter(mScheduleAdapter);
+        rcvSchedulesToday.setAdapter(mShScheduleToDayAdapter);
     }
 
     @Override
     public void onGetItemsSuccess(ArrayList<Schedule> items) {
         mScheduleAdapter.updateSchedules(items);
+        mShScheduleToDayAdapter.updateSchedules(getCurrentToday(items));
         if (this.getChildFragmentManager().getBackStackEntryCount() > 0) {
             mFragmentManager.popBackStack();
         }
+    }
+
+    private List<Schedule> getCurrentToday(ArrayList<Schedule> items) {
+        ArrayList<Schedule> temps = new ArrayList<>();
+        for (int index = 0; index < items.size(); index++) {
+            if (items.get(index).getDate().equals("19/06")) {
+               temps.add(items.get(index));
+            }
+        }
+        return temps;
     }
 
     @Override
